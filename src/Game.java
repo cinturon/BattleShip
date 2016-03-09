@@ -40,6 +40,7 @@ public class Game extends GraphicsProgram{
   }
   public void run(){
 
+
     buildBoard(playerGrid, 50, 100);
     buildBoard(CPUGrid, 775, 100);
     setupPlayerBoard();
