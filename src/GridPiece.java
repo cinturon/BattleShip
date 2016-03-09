@@ -28,7 +28,7 @@ public class GridPiece extends GCompound {
     clicked = false;
 
     gridSquare = new GRect(50,50);
-    gridSquare.setFilled(true);
+    gridSquare.setFilled(false);
     gridSquare.setFillColor(color);
     add(gridSquare);
 

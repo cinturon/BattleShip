@@ -1,3 +1,4 @@
+import acm.graphics.GImage;
 import acm.graphics.GObject;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
@@ -12,12 +13,9 @@ import java.util.ListIterator;
  * Created by Belt on 2/16/2016.
  */
 public class Game extends GraphicsProgram{
-  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-  double width = screenSize.getWidth();
-  double height = screenSize.getHeight();
 
 
-
+  RandomGenerator generator = new RandomGenerator();
   GObject gridClick;
   int boardSize =10;
   int winningScore = 14;
@@ -32,21 +30,24 @@ public class Game extends GraphicsProgram{
   //ArrayList<Integer> boatArray = new ArrayList<>();
 
   public void init(){
-    setSize(600,600);
-    //setSize((int)width,(int)height);
+    GImage background = new GImage("rsz_ocean.jpg");
+    background.scale(2.5);
+    add(background);
+    setSize(1350,800);
+    addKeyListeners();
     addMouseListeners();
   }
   public void run(){
-  setupPlayerBoard();
 
 
-    buildBoard(playerGrid, 10, 10);
-    buildBoard(CPUGrid, 600, 10);
+    buildBoard(playerGrid, 50, 100);
+    buildBoard(CPUGrid, 775, 100);
+    setupPlayerBoard();
 
 
 
     destroyer = new Ship(5);
-    add(destroyer,500,100);
+    add(destroyer,1200,100);
 
 
   }
@@ -77,24 +78,12 @@ public class Game extends GraphicsProgram{
       GridPiece piece = playerGrid.get(playerGrid.indexOf(gridClick));
       checkForHit(piece);
     }
-
-
-
-
-
-
-
-
-
-
   }//mousePressed method
 
   private void checkForHit(GridPiece clickedGrid) {
 
     for(ListIterator<Integer> integerIterator = hitArray.listIterator(); integerIterator.hasNext();){
       Integer hit = integerIterator.next();
-
-
 
       if(playerGrid.indexOf(clickedGrid) == hit  && clickedGrid.isClicked() == false) {
         clickedGrid.setClicked(true);
@@ -106,7 +95,7 @@ public class Game extends GraphicsProgram{
       }
     }
 
-    println(playerGrid.indexOf(gridClick));
+//    println(playerGrid.indexOf(gridClick));
   }
 
   public void mouseDragged(MouseEvent e)
@@ -118,12 +107,11 @@ public class Game extends GraphicsProgram{
     } //mouseDragged
   }
   public void setupPlayerBoard() {
-    RandomGenerator generator = new RandomGenerator();
+
 
     for (double boatSize = 2; boatSize <= 5; boatSize++) {
 
       double startingBoatPosition = generator.nextDouble(0, 99);
-//      println("Start: " + startingBoatPosition);
 
       //No boats off the bottom of the board
       while (startingBoatPosition + boatSize >= 100){
@@ -135,48 +123,62 @@ public class Game extends GraphicsProgram{
           startingBoatPosition = generator.nextDouble(0,99);
       }
 
-//      //Check for duplicates
-//      for(Integer boatHit : boatArray){
-//        println("boatHit = " + boatHit);
-//        for (Integer hit : hitArray){
-//          println("hit = " + hit);
-//          if(boatHit == hit){
-//            boatArray.clear();
-//            //boatSize--;
-//          }
-//        }
-//      }
-
-
 
       ArrayList<Integer> boat = boatMaker(boatSize,startingBoatPosition);
+
+      println("Boat Array: " + boat);
+
+      //Check if boat went off the board (over Position 100)
+      if(offTheBoard(boat)){
+        boat.clear();
+        boatSize--;
+      }
+
+      //For loop checks for duplicate numbers in temp array
       for (Integer hit: hitArray) {
         if (boat.contains(hit)){
             boat.clear();
             boatSize--;
         }
-
       }
+
       hitArray.addAll(boat);
+
     }
-    println(hitArray);
+    println("HIT ARRAY: " + hitArray);
+    println("HIT ARRAY SIZE = " + hitArray.size());
 
   }
 
   public ArrayList<Integer> boatMaker(double boatSize, double startingBoatPosition){
 
     ArrayList<Integer> boatArray = new ArrayList<>();
-    int horizontalBoat = 0;
+    int buildDirection;
+    int nextPosition = 0;
+    int directionPicker = generator.nextInt(1,2);
+    if(directionPicker == 1){
+      buildDirection = 1;
+    }else {
+      buildDirection = 10;
+    }
+
 
     for (int boat = 0; boat < boatSize; boat++) {
-      boatArray.add((int)startingBoatPosition + horizontalBoat);
 
+      boatArray.add((int)startingBoatPosition + nextPosition);
+      nextPosition += buildDirection;
 
-//      println("hitArray: " + hitArray);
-
-      horizontalBoat++;
     }
     return boatArray;
+  }
+  private boolean offTheBoard(ArrayList<Integer> boatArray){
+    for (Integer boatNum : boatArray){
+      if(boatNum >= 100){
+        return true;
+      }
+    }
+
+    return false;
   }
 
 }
