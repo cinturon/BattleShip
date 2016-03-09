@@ -3,9 +3,11 @@ import acm.graphics.GObject;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
+import acm.util.SoundClip;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -13,8 +15,6 @@ import java.util.ListIterator;
  * Created by Belt on 2/16/2016.
  */
 public class Game extends GraphicsProgram{
-
-
   RandomGenerator generator = new RandomGenerator();
   GObject gridClick;
   int boardSize =10;
@@ -30,6 +30,7 @@ public class Game extends GraphicsProgram{
   //ArrayList<Integer> boatArray = new ArrayList<>();
 
   public void init(){
+
     GImage background = new GImage("rsz_ocean.jpg");
     background.scale(2.5);
     add(background);
@@ -38,7 +39,6 @@ public class Game extends GraphicsProgram{
     addMouseListeners();
   }
   public void run(){
-
 
     buildBoard(playerGrid, 50, 100);
     buildBoard(CPUGrid, 775, 100);
