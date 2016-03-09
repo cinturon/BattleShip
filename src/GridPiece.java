@@ -12,16 +12,29 @@ public class GridPiece extends GCompound {
   private GRect gridSquare;
   private GOval shotPositon;
 
-  GridPiece(){
+  public boolean isClicked() {
+    return clicked;
+  }
+
+  public void setClicked(boolean clicked) {
+    this.clicked = clicked;
+  }
+
+  private boolean clicked;
+
+  GridPiece(Color color){
+
+
+    clicked = false;
 
     gridSquare = new GRect(50,50);
     gridSquare.setFilled(true);
-    gridSquare.setFillColor(new Color(50,35,200));
+    gridSquare.setFillColor(color);
     add(gridSquare);
 
     shotPositon = new GOval(20,20,12,12);
     shotPositon.setFilled(true);
-    shotPositon.setFillColor(Color.BLACK);
+    shotPositon.setFillColor(new Color(0,0,0));
     add(shotPositon);
 
   }

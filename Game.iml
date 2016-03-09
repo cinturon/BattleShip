@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/acm.jar!/" />
+          <root url="jar://$USER_HOME$/ACM Library/acm.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
