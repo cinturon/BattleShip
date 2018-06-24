@@ -11,4 +11,4 @@ A simplified one player version of Battleship board game
 
 Jeremy Belt
 
-(https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+(https://github.com/cinturon/BattleShip/blob/master/ScreenShot.png)
